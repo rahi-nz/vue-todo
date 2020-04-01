@@ -1,0 +1,30 @@
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 18px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  margin: 5px;
+  transition-duration: .1ms;
+}
+.remove-items {
+  cursor: pointer;
+}
+.item-wrapper {
+  display: flex;
+  align-items: center;
+}
+.ant-checkbox-wrapper {
+  margin-right: 5px;
+}
+.remove-items :hover {
+  opacity: 0.9;
+}
+.complete {
+  text-decoration: line-through;
+}
+.icons {
+  cursor: pointer;
+  margin: 3px;
+}
