@@ -41,21 +41,21 @@
         <a-button
           size="small"
           :class="{ active: filter === 'all' }"
-          @click="filter = 'all'"
+          @click="changeFilter('all')"
         >
           All
         </a-button>
         <a-button
           size="small"
           :class="{ active: filter === 'completed' }"
-          @click="filter = 'completed'"
+          @click="changeFilter('completed')"
         >
           completed
         </a-button>
         <a-button
           size="small"
           :class="{ active: filter === 'active' }"
-          @click="filter = 'active'"
+          @click="changeFilter('active')"
         >
           Active
         </a-button>
@@ -82,22 +82,7 @@ export default {
     return {
       newTodo: "",
       beforeEditCache: "",
-      idFor: 3,
-      filter: "all",
-      toDos: [
-        {
-          id: 1,
-          title: "Start a Meditation Practice.",
-          complete: false,
-          editState: false
-        },
-        {
-          id: 2,
-          title: "be a creative developer",
-          complete: false,
-          editState: false
-        }
-      ]
+      idFor: 3
     };
   },
   components: {
@@ -108,7 +93,7 @@ export default {
       if (!this.newTodo.trim()) {
         return;
       }
-      this.toDos.push({
+      this.$store.commit("addTodo", {
         id: this.idFor,
         title: this.newTodo,
         editState: false,
@@ -117,46 +102,39 @@ export default {
       this.newTodo = "";
       this.idFor++;
     },
-    remove(index) {
-      this.toDos.splice(index, 1);
-    },
     changeEditState(todo) {
       this.beforeEditCache = todo.title;
       todo.editState = true;
     },
     checkAllItems() {
-      this.toDos.forEach(todo => (todo.complete = event.target.checked));
+      this.$store.commit("checkAllItems");
     },
     clearCompleted() {
-      this.toDos = this.toDos.filter(todo => !todo.complete);
+      this.$store.commit("clearCompleted");
     },
-    finishEditing(data) {
-      console.log("data:", data);
-      this.toDos.splice(data.index, 1, data.toDos);
+    changeFilter(filter) {
+      this.$store.state.filter = filter;
     }
   },
   computed: {
+    filter() {
+      return this.$store.state.filter;
+    },
+    toDos() {
+      return this.$store.state.toDos;
+    },
     remaining() {
-      return this.toDos.filter(todo => !todo.complete).length;
+      return this.$store.getters.remaining;
     },
     anyRemaining() {
-      return this.remaining !== 0;
+      return this.$store.getters.anyRemaining;
     },
 
     todosFiltered() {
-      switch (this.filter) {
-        case "all":
-          return this.toDos;
-        case "active":
-          return this.toDos.filter(el => !el.complete);
-        case "completed":
-          return this.toDos.filter(el => el.complete);
-        default:
-          return this.toDos;
-      }
+      return this.$store.getters.todosFiltered;
     },
     showClearCompleted() {
-      return this.toDos.filter(todo => todo.complete).length > 0;
+      return this.$store.getters.showClearCompleted;
     }
   }
 };

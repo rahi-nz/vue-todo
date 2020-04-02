@@ -14,7 +14,7 @@ import Persian from "ant-design-vue/lib/locale-provider/fa_IR";
 export default {
   name: "home",
   components: {
-    todo,
+    todo
   },
   data() {
     return {

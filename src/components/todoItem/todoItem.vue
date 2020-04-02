@@ -79,7 +79,7 @@ export default {
   },
   methods: {
     remove(index) {
-      this.$emit("remove", index);
+      this.$store.commit("remove", index);
     },
     changeEditState() {
       this.beforeEditCache = this.title;
@@ -89,16 +89,13 @@ export default {
       if (!this.title.trim()) {
         this.title = this.beforeEditCache;
       }
-      this.editState = false;
-      this.$emit("finishEditing", {
-        index: this.index,
-        toDos: {
-          id: this.id,
-          title: this.title,
-          complete: this.complete,
-          editState: this.editState
-        }
+      this.$store.commit("editDone", {
+        id: this.id,
+        title: this.title,
+        complete: this.complete,
+        editState: this.editState
       });
+      this.editState = false;
     },
     cancelEdit() {
       this.title = this.beforeEditCache;

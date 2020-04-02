@@ -5,6 +5,7 @@ import router from "./router";
 import store from "./store/index";
 import "ant-design-vue/dist/antd.css";
 
+window.eventBus = new Vue();
 Vue.config.productionTip = false;
 
 Vue.use(Antd);
