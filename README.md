@@ -1,23 +1,23 @@
-# new-app
+# Build Setup
 
-## Project setup
+# install dependencies
 ```
-npm install
+yarn install
 ```
 
-### Compiles and hot-reloads for development
+### serve with hot reload at localhost:8080
 ```
-npm run serve
+yarn serve
 ```
 
 ### Compiles and minifies for production
 ```
-npm run build
+yarn build
 ```
 
-### Lints and fixes files
+### run e2e tests
 ```
-npm run lint
+yarn test:e2e
 ```
 
 ### Customize configuration
